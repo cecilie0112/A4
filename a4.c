@@ -5,7 +5,6 @@
 
 #define INPUTMAX 100
 
-
 typedef struct node {
   long int value;
   struct node * next;
@@ -16,14 +15,17 @@ typedef struct
   ListNode * head;
 } List;
 
+
 void inputFun(char *);
 long int getNumb(char *);
 int detMode(char *);
-
 void openMode(List *, long int);
 void closeMode(List *, long int);
+
 void switchMode(List *, long int);
 void dispOutput(int);
+void deleteList(List *);
+void deleteNode(List *, ListNode *);
 
 int main(void) {
   List * windowList = malloc(sizeof(List));
@@ -38,7 +40,7 @@ int main(void) {
     switch (mode) {
       case 1: openMode(windowList, numb); break;
       case 2: closeMode(windowList, numb); break; 
-      // case 3: switchMode(windowArray, numb); break;
+      case 3: switchMode(windowList, numb); break;
     }
 
     // printf("Number: %ld\n", numb);
@@ -48,9 +50,57 @@ int main(void) {
     }
   }while((windowList -> head) != NULL);
 
+  //FREE THE LIST 
+  //deleteList(windowList);
+
   return 0;
 }
 
+void deleteList(List * windowList) {
+  if (windowList -> head == NULL) {
+    printf("List is empty!");
+    return;
+  }
+  ListNode * current; 
+  while(windowList -> head != NULL) {
+    current = windowList -> head;
+    windowList -> head = windowList -> head -> next;
+    deleteNode(windowList, current);
+  }
+}
+
+void deleteNode(List * windowList, ListNode * toDelete) {
+  if (windowList -> head == NULL) {
+    printf("List is empty!");
+    return;
+  }
+  if (windowList -> head == toDelete) {
+    ListNode * temp = windowList -> head;
+    windowList -> head = toDelete -> next;
+    free (temp);
+    return;
+  }
+
+  ListNode * temp;
+  ListNode * temp_next;
+
+  while ((temp_next != NULL) && (temp_next != toDelete)) {
+    temp = temp -> next;
+    temp_next = temp_next -> next;
+  }
+
+  if (temp_next != NULL) {
+    temp -> next = temp_next -> next;
+    free(temp_next);
+    return;
+  }
+}
+
+void switchMode(List * windowList, long int numb) {
+
+}
+
+//This function removes a specificed node from the stack
 void closeMode(List * windowList, long int numb) {
   if (windowList -> head == NULL) {
     printf("List is empty. Nothing to be deleted.");
@@ -81,6 +131,7 @@ void closeMode(List * windowList, long int numb) {
   return;
 }
 
+//This function creates a new node with the number as its value as inserts it at the head of the list
 void openMode(List * windowList, long int numb) {
   ListNode * newNode = malloc(sizeof(ListNode));
   newNode -> value = numb;
