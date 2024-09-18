@@ -21,11 +21,7 @@ long int getNumb(char *);
 int detMode(char *);
 void openMode(List *, long int);
 void closeMode(List *, long int);
-
 void switchMode(List *, long int);
-void dispOutput(int);
-void deleteList(List *);
-void deleteNode(List *, ListNode *);
 
 int main(void) {
   List * windowList = malloc(sizeof(List));
