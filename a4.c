@@ -33,6 +33,7 @@ int main(void) {
     int mode = detMode(inputArray); //Gets the mode (open -> 1, close -> 2, switch -> 3)
     long int numb = getNumb(inputArray); //Extrating the number from the input
 
+    //Determines the operation
     switch (mode) {
       case 1: openMode(windowList, numb); break;
       case 2: closeMode(windowList, numb); break; 
@@ -87,7 +88,7 @@ void closeMode(List * windowList, long int numb) {
   return;
 }
 
-//This function creates a new node with the number as its value as inserts it at the head of the list
+//This function creates a new node with the number as its value and inserts it at the head of the list
 void openMode(List * windowList, long int numb) {
   ListNode * newNode = malloc(sizeof(ListNode));
   newNode -> value = numb;
@@ -104,6 +105,7 @@ int detMode(char * inputArray) {
   }
 }
 
+//Extracts the number from the standard input
 long int getNumb(char * inputArray) {
   int size = strlen(inputArray);
   int j = 0;
@@ -122,6 +124,7 @@ long int getNumb(char * inputArray) {
   return numb;
 }
 
+//Gets input from standard input
 void inputFun(char * inputArray) {
     scanf("\n%[^\n]%*c", inputArray);
     return;
