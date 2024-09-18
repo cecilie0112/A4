@@ -51,53 +51,14 @@ int main(void) {
   }while((windowList -> head) != NULL);
 
   //FREE THE LIST 
-  //deleteList(windowList);
-
+  free(windowList);
   return 0;
 }
-
-void deleteList(List * windowList) {
-  if (windowList -> head == NULL) {
-    printf("List is empty!");
-    return;
-  }
-  ListNode * current; 
-  while(windowList -> head != NULL) {
-    current = windowList -> head;
-    windowList -> head = windowList -> head -> next;
-    deleteNode(windowList, current);
-  }
-}
-
-void deleteNode(List * windowList, ListNode * toDelete) {
-  if (windowList -> head == NULL) {
-    printf("List is empty!");
-    return;
-  }
-  if (windowList -> head == toDelete) {
-    ListNode * temp = windowList -> head;
-    windowList -> head = toDelete -> next;
-    free (temp);
-    return;
-  }
-
-  ListNode * temp;
-  ListNode * temp_next;
-
-  while ((temp_next != NULL) && (temp_next != toDelete)) {
-    temp = temp -> next;
-    temp_next = temp_next -> next;
-  }
-
-  if (temp_next != NULL) {
-    temp -> next = temp_next -> next;
-    free(temp_next);
-    return;
-  }
-}
-
+//Identifies which window to move to the top of the stack
 void switchMode(List * windowList, long int numb) {
-
+  closeMode(windowList, numb);
+  openMode(windowList, numb);
+  return;
 }
 
 //This function removes a specificed node from the stack
