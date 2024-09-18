@@ -43,8 +43,6 @@ int main(void) {
       case 3: switchMode(windowList, numb); break;
     }
 
-    // printf("Number: %ld\n", numb);
-    // printf("Mode: %d\n", mode);
     if ((windowList -> head) != NULL) {
       printf("%ld\n", windowList -> head -> value);
     }
@@ -54,6 +52,7 @@ int main(void) {
   free(windowList);
   return 0;
 }
+
 //Identifies which window to move to the top of the stack
 void switchMode(List * windowList, long int numb) {
   closeMode(windowList, numb);
