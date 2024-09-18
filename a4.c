@@ -36,17 +36,49 @@ int main(void) {
     long int numb = getNumb(inputArray); //Extrating the number from the input
 
     switch (mode) {
-      case 1: openMode(windowList, numb);
-      // case 2: closeMode(windowArray, numb);
-      // case 3: switchMode(windowArray, numb);
+      case 1: openMode(windowList, numb); break;
+      case 2: closeMode(windowList, numb); break; 
+      // case 3: switchMode(windowArray, numb); break;
     }
 
     // printf("Number: %ld\n", numb);
     // printf("Mode: %d\n", mode);
-    // printf("%ld\n", windowList -> head -> value);
-  }while(1);
+    if ((windowList -> head) != NULL) {
+      printf("%ld\n", windowList -> head -> value);
+    }
+  }while((windowList -> head) != NULL);
 
   return 0;
+}
+
+void closeMode(List * windowList, long int numb) {
+  if (windowList -> head == NULL) {
+    printf("List is empty. Nothing to be deleted.");
+    return;
+  }
+
+  if ((windowList -> head -> value) == numb) {
+    ListNode * nextHead = windowList -> head -> next;
+    free(windowList -> head);
+    windowList -> head = nextHead;
+    return;
+  }
+
+  ListNode dummy;
+  dummy.next = windowList -> head;
+  ListNode * curr = dummy.next;
+  ListNode * prev = curr;
+
+  while ((curr != NULL) && (curr -> value != numb)) {
+    prev = curr;
+    curr = curr -> next;
+  }
+
+  if (curr != NULL) {
+    prev -> next = curr -> next;
+    free(curr);
+  }
+  return;
 }
 
 void openMode(List * windowList, long int numb) {
