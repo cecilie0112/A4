@@ -13,9 +13,7 @@ a4: $(OBJS)
 .c.o: 
 	$(GCC) $(TESTFALGS) -c $*.c 
 
-testall: test1
-
-test1: a4
+test: a4
 
 memory: a4
 	valgrind --tool=memcheck ./a4
