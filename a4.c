@@ -5,18 +5,29 @@
 
 #define INPUTMAX 100
 
+
+typedef struct node {
+  long int value;
+  struct node * next;
+} ListNode;
+
+typedef struct
+{
+  ListNode * head;
+} List;
+
 void inputFun(char *);
 long int getNumb(char *);
 int detMode(char *);
 
-void openMode(int *, int, int *);
-void closeMode(int *, int, int *);
-void switchMode(int *, int, int *);
+void openMode(List *, long int);
+void closeMode(List *, long int);
+void switchMode(List *, long int);
 void dispOutput(int);
 
 int main(void) {
-  int * windowArray = calloc(10, sizeof(int));
-  int windowArrayIndx = 0;
+  List * windowList = malloc(sizeof(List));
+  windowList -> head = NULL;
 
   do {
     char inputArray[INPUTMAX];
@@ -25,22 +36,24 @@ int main(void) {
     long int numb = getNumb(inputArray); //Extrating the number from the input
 
     switch (mode) {
-      case 1: openMode(windowArray, numb, &windowArrayIndx);
-      case 2: closeMode(windowArray, numb, &windowArrayIndx);
-      case 3: switchMode(windowArray, numb, &windowArrayIndx);
+      case 1: openMode(windowList, numb);
+      // case 2: closeMode(windowArray, numb);
+      // case 3: switchMode(windowArray, numb);
     }
 
     // printf("Number: %ld\n", numb);
     // printf("Mode: %d\n", mode);
+    // printf("%ld\n", windowList -> head -> value);
   }while(1);
 
   return 0;
 }
 
-void openMode (int * windowArray, int numb, int * windowArrayIndx) {
-    windowArray[*windowArrayIndx] = numb;
-    ++(*windowArrayIndx);
-    return;
+void openMode(List * windowList, long int numb) {
+  ListNode * newNode = malloc(sizeof(ListNode));
+  newNode -> value = numb;
+  newNode -> next = windowList -> head;
+  windowList -> head = newNode;
 }
 
 int detMode(char * inputArray) {
@@ -71,6 +84,6 @@ long int getNumb(char * inputArray) {
 }
 
 void inputFun(char * inputArray) {
-    scanf("%[^\n]%*c", inputArray);
+    scanf("\n%[^\n]%*c", inputArray);
     return;
 }
